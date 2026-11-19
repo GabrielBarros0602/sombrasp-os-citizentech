@@ -1,0 +1,16 @@
+[Unit]
+Description=SombraSP - Web app (painel de risco de calor) na porta 8080
+After=network.target citizentech-agent.service
+RequiresMountsFor=/srv/citizentech/data
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=FelipeOliveira_RM556319
+Group=citizenops
+ExecStart=/usr/bin/python3 -m http.server 8080 --directory /srv/citizentech/app
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

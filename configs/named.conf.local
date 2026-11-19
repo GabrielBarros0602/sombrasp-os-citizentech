@@ -1,0 +1,6 @@
+
+// SombraSP - zona DNS de teste do projeto (acrescentada ao /etc/bind/named.conf.local)
+zone "sombrasp.test" {
+    type master;
+    file "/etc/bind/db.sombrasp.test";
+};

@@ -1,0 +1,15 @@
+; Zona sombrasp.test - SombraSP (CT-NODE 192.168.56.10)
+$TTL 604800
+@   IN  SOA ns1.sombrasp.test. admin.sombrasp.test. (
+        2026111701 ; Serial
+        604800     ; Refresh
+        86400      ; Retry
+        2419200    ; Expire
+        604800 )   ; Negative Cache TTL
+@       IN  NS  ns1.sombrasp.test.
+ns1     IN  A   192.168.56.10   ; servidor DNS (BIND9 no CT-NODE)
+node    IN  A   192.168.56.10   ; no de infraestrutura
+dados   IN  A   192.168.56.10   ; area logica de dados (/srv/citizentech/data)
+monitor IN  A   192.168.56.10   ; agente/monitor de CPU, memoria e disco
+app     IN  A   192.168.56.10   ; web app SombraSP (porta 8080)
+cliente IN  A   192.168.56.20   ; CT-CLIENT

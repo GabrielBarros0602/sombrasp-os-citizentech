@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SombraSP — Alerta de calor no Centro</title>
+<style>
+  :root { --bg:#fffaf0; --fg:#1a1a1a; --card:#fff; --alto:#b3261e; --borda:#ddd; }
+  body { margin:0; font:20px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width:760px; margin:0 auto; padding:16px; }
+  h1 { font-size:1.8em; margin:.2em 0; }
+  .card { background:var(--card); border:1px solid var(--borda); border-radius:12px; padding:16px; margin:16px 0; }
+  .risco { border:4px solid var(--alto); }
+  .risco strong { color:var(--alto); font-size:1.6em; }
+  li { margin:.4em 0; }
+  code { font-size:.8em; white-space:pre-wrap; word-break:break-all; }
+  small { color:#555; }
+</style>
+</head>
+<body>
+<main>
+  <h1>☀️ SombraSP</h1>
+  <p>Alertas de calor extremo para idosos e trabalhadores de rua — Centro de São Paulo (Sé / República).</p>
+
+  <section class="card risco" aria-live="polite">
+    <p>Risco de calor agora: <strong>ALTO</strong></p>
+    <p>Índice de calor estimado: <b>41 °C</b>. Procure sombra, beba água a cada 20 minutos e evite o sol entre 11h e 16h.</p>
+    <small>Valor ilustrativo (dados simulados). A previsão real vem do modelo da entrega de IA&amp;ML e da estação ESP32.</small>
+  </section>
+
+  <section class="card">
+    <h2>Pontos de sombra e hidratação próximos</h2>
+    <ul>
+      <li><b>Praça da República</b> — árvores e bancos à sombra</li>
+      <li><b>Biblioteca Mário de Andrade</b> — ambiente fechado e bebedouro</li>
+      <li><b>Pátio do Colégio</b> — área coberta</li>
+      <li><b>Estação Sé do Metrô</b> — área coberta</li>
+    </ul>
+    <small>Locais públicos usados como exemplo; disponibilidade de água não verificada.</small>
+  </section>
+
+  <section class="card">
+    <h2>Estado do nó de infraestrutura</h2>
+    <code id="estado">carregando…</code>
+    <p><small>Lido de <code>status.txt</code>, gravado pelo agente <code>citizentech-agent</code> a cada 30 s.</small></p>
+  </section>
+</main>
+<script>
+  async function atualiza() {
+    const el = document.getElementById('estado');
+    try {
+      const r = await fetch('status.txt', { cache: 'no-store' });
+      el.textContent = r.ok ? (await r.text()).trim() : 'status.txt indisponível (HTTP ' + r.status + ')';
+    } catch (e) { el.textContent = 'falha ao consultar o nó: ' + e.message; }
+  }
+  atualiza(); setInterval(atualiza, 30000);
+</script>
+</body>
+</html>
